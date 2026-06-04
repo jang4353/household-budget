@@ -1,3 +1,5 @@
+import TransactionItem from '@/components/TransactionItem';
+
 export default function Home() {
   const transactions = [
     { id: 1, date: '2025-06-04', category: '식비', memo: '점심', amount: 12000, type: 'expense' },
@@ -44,15 +46,13 @@ export default function Home() {
           <div key={date} className="mb-4">
             <p className="text-xs text-gray-400 mb-2">{date}</p>
             {items.map(t => (
-              <div key={t.id} className="flex justify-between items-center border-b py-2">
-                <div>
-                  <span className="font-medium text-sm">{t.category}</span>
-                  <span className="text-gray-400 text-xs ml-2">{t.memo}</span>
-                </div>
-                <span className={`text-sm font-medium ${t.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
-                  {t.type === 'income' ? '+' : '-'}{fmt(t.amount)}
-                </span>
-              </div>
+              <TransactionItem
+                key={t.id}
+                category={t.category}
+                memo={t.memo}
+                amount={t.amount}
+                type={t.type}
+              />
             ))}
           </div>
         ))
