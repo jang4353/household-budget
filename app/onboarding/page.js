@@ -8,6 +8,9 @@ export default function OnboardingPage() {
   const router = useRouter();
   const [inviteCode, setInviteCode] = useState('');
   const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [created, setCreated] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -31,7 +34,43 @@ export default function OnboardingPage() {
     });
   }, [router]);
 
+  async function handleCreate() {
+    setError('');
+    setLoading(true);
+
+    const { data, error } = await supabase.rpc('create_household');
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+      return;
+    }
+
+    setCreated(data);
+    setLoading(false);
+  }
+
   if (!ready) return null;
+
+  if (created) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="bg-white p-8 rounded-lg shadow w-full max-w-sm text-center">
+          <p className="text-lg font-bold mb-2">가계부가 만들어졌습니다!</p>
+          <p className="text-sm text-gray-500 mb-6">배우자에게 아래 초대 코드를 공유하세요.</p>
+          <p className="text-3xl font-bold tracking-widest text-blue-600 mb-8">
+            {created.invite_code}
+          </p>
+          <button
+            onClick={() => router.push('/transactions')}
+            className="w-full bg-blue-600 text-white py-3 rounded font-medium hover:bg-blue-700"
+          >
+            거래 화면으로 이동
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -39,11 +78,14 @@ export default function OnboardingPage() {
         <h1 className="text-2xl font-bold text-center mb-8">부부 가계부 시작하기</h1>
 
         <button
-          onClick={() => alert('다음 단계에서 구현')}
-          className="w-full bg-blue-600 text-white py-3 rounded font-medium hover:bg-blue-700 mb-6"
+          onClick={handleCreate}
+          disabled={loading}
+          className="w-full bg-blue-600 text-white py-3 rounded font-medium hover:bg-blue-700 disabled:opacity-50 mb-6"
         >
-          가계부 만들기
+          {loading ? '생성 중...' : '가계부 만들기'}
         </button>
+
+        {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
 
         <div className="flex items-center gap-3 mb-6">
           <hr className="flex-1 border-gray-200" />
