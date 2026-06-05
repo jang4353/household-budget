@@ -17,6 +17,7 @@ export default function TransactionsPage() {
       .from('transactions')
       .select('*')
       .order('date', { ascending: false })
+      .order('created_at', { ascending: false })
       .then(({ data, error }) => {
         if (error) {
           setError(error.message);
@@ -26,6 +27,13 @@ export default function TransactionsPage() {
         setLoading(false);
       });
   }, []);
+
+  async function handleDelete(id) {
+    const { error } = await supabase.from('transactions').delete().eq('id', id);
+    if (!error) {
+      setTransactions((prev) => prev.filter((t) => t.id !== id));
+    }
+  }
 
   const income = transactions
     .filter((t) => t.type === 'income')
@@ -70,7 +78,7 @@ export default function TransactionsPage() {
       )}
 
       {!loading && !error && transactions.length > 0 && (
-        <TransactionList transactions={transactions} />
+        <TransactionList transactions={transactions} onDelete={handleDelete} />
       )}
     </div>
   );

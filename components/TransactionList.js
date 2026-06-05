@@ -1,6 +1,6 @@
 import TransactionItem from '@/components/TransactionItem';
 
-export default function TransactionList({ transactions }) {
+export default function TransactionList({ transactions, onDelete }) {
   const grouped = transactions.reduce((acc, t) => {
     (acc[t.date] ??= []).push(t);
     return acc;
@@ -16,10 +16,12 @@ export default function TransactionList({ transactions }) {
             {items.map(t => (
               <TransactionItem
                 key={t.id}
+                id={t.id}
                 category={t.category}
                 memo={t.memo}
                 amount={t.amount}
                 type={t.type}
+                onDelete={onDelete}
               />
             ))}
           </div>
