@@ -20,9 +20,21 @@ export default function DashboardLayout({ children }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) {
         router.push('/login');
-      } else {
-        setChecked(true);
+        return;
       }
+
+      supabase
+        .from('household_members')
+        .select('household_id')
+        .eq('user_id', session.user.id)
+        .limit(1)
+        .then(({ data, error }) => {
+          if (error || !data || data.length === 0) {
+            router.push('/onboarding');
+          } else {
+            setChecked(true);
+          }
+        });
     });
   }, [router]);
 
