@@ -1,12 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import TransactionList from '@/components/TransactionList';
+import MonthlySummary from '@/components/MonthlySummary';
+import CategoryExpenseChart from '@/components/CategoryExpenseChart';
 
-export default function TransactionsPage() {
-  const router = useRouter();
+export default function StatisticsPage() {
   const [currentDate, setCurrentDate] = useState(() => {
     const now = new Date();
     return { year: now.getFullYear(), month: now.getMonth() + 1 };
@@ -29,8 +28,6 @@ export default function TransactionsPage() {
       .select('*')
       .gte('date', start)
       .lte('date', end)
-      .order('date', { ascending: false })
-      .order('created_at', { ascending: false })
       .then(({ data, error }) => {
         if (error) {
           setError(error.message);
@@ -53,14 +50,18 @@ export default function TransactionsPage() {
     );
   }
 
-  async function handleDelete(id) {
-    const { error } = await supabase.from('transactions').delete().eq('id', id);
-    if (!error) {
-      setTransactions((prev) => prev.filter((t) => t.id !== id));
-    }
-  }
+  const income = transactions
+    .filter((t) => t.type === 'income')
+    .reduce((sum, t) => sum + Number(t.amount), 0);
+
+  const expense = transactions
+    .filter((t) => t.type === 'expense')
+    .reduce((sum, t) => sum + Number(t.amount), 0);
 
   const { year, month } = currentDate;
+  const now = new Date();
+  const isCurrentMonth = year === now.getFullYear() && month === now.getMonth() + 1;
+  const summaryLabel = isCurrentMonth ? '이번 달 요약' : `${month}월 요약`;
 
   return (
     <div className="max-w-md mx-auto mt-6">
@@ -71,29 +72,19 @@ export default function TransactionsPage() {
           <p className="text-lg font-bold">{year}년 {month}월</p>
           <button onClick={moveNext} className="text-gray-400 hover:text-gray-700 text-lg px-1">▶</button>
         </div>
-      </div>
-
-      {/* 거래 내역 섹션 헤더 */}
-      <div className="flex items-center justify-between mb-3">
-        <p className="text-base font-semibold">거래 내역</p>
-        <button
-          onClick={() => router.push('/transactions/new')}
-          className="bg-blue-600 text-white text-sm px-3 py-1.5 rounded hover:bg-blue-700"
-        >
-          거래 추가
-        </button>
+        <p className="text-sm font-medium text-gray-700 mt-1">{summaryLabel}</p>
+        <p className="text-xs text-gray-400 mt-0.5">수입·지출·순수익을 한눈에 확인할 수 있습니다.</p>
       </div>
 
       {loading && <p className="text-center text-gray-400 text-sm">불러오는 중...</p>}
 
       {error && <p className="text-center text-red-500 text-sm">{error}</p>}
 
-      {!loading && !error && transactions.length === 0 && (
-        <p className="text-center text-gray-400 text-sm mt-8">아직 등록된 거래가 없습니다.</p>
-      )}
-
-      {!loading && !error && transactions.length > 0 && (
-        <TransactionList transactions={transactions} onDelete={handleDelete} />
+      {!loading && !error && (
+        <>
+          <MonthlySummary income={income} expense={expense} balance={income - expense} />
+          <CategoryExpenseChart transactions={transactions} />
+        </>
       )}
     </div>
   );

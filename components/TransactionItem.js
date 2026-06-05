@@ -15,8 +15,8 @@ export default function TransactionItem({ id, category, memo, amount, type, onDe
   return (
     <div className="flex justify-between items-center border-b py-2 gap-2">
       <div className="flex-1 min-w-0">
-        <span className="font-medium text-sm">{category}</span>
-        <span className="text-gray-400 text-xs ml-2">{memo}</span>
+        <p className="font-medium text-sm">{category}</p>
+        {memo && <p className="text-gray-400 text-xs mt-0.5">{memo}</p>}
       </div>
       <span className={`text-sm font-medium shrink-0 ${type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
         {type === 'income' ? '+' : '-'}{fmt(amount)}
