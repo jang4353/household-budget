@@ -1,0 +1,35 @@
+[33mcommit 1a0b6b37d9aa0c45a25aa5e4754a7b399b588230[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: 장태용 <falcon4353@gmail.com>
+Date:   Thu Jun 4 18:03:37 2026 +0900
+
+    DAY1 END : supabase 연결완료
+
+[33mcommit 57a6346b0ae3fdb45cbbca162fdbf6771261c67d[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: 장태용 <falcon4353@gmail.com>
+Date:   Thu Jun 4 17:22:33 2026 +0900
+
+    refactor: extract dashboard components
+
+[33mcommit 6afda2ad4017eeb397d2b27cd09424af10a6ae74[m
+Author: 장태용 <falcon4353@gmail.com>
+Date:   Thu Jun 4 17:05:32 2026 +0900
+
+    refactor: extract transaction item component
+
+[33mcommit e0023b25ec23574efffbde5a51f3acedf6eaa613[m
+Author: 장태용 <falcon4353@gmail.com>
+Date:   Thu Jun 4 16:55:30 2026 +0900
+
+    feat : add static budget dashboard
+
+[33mcommit 97e1f11567f77dff87069eaf98a36881bba7cd35[m
+Author: 장태용 <falcon4353@gmail.com>
+Date:   Thu Jun 4 16:04:52 2026 +0900
+
+    feat: customize home page
+
+[33mcommit 5dd9b3f0b4030bf2f7567393e51207dfa47ff77f[m
+Author: 장태용 <falcon4353@gmail.com>
+Date:   Thu Jun 4 15:48:35 2026 +0900
+
+    Initialize Next.js project
