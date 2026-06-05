@@ -8,7 +8,6 @@ export default function TransactionList({ transactions }) {
 
   return (
     <div>
-      <h2 className="text-base font-semibold mb-3">거래 내역</h2>
       {Object.entries(grouped)
         .sort(([a], [b]) => b.localeCompare(a))
         .map(([date, items]) => (
