@@ -32,20 +32,9 @@ export default function DashboardLayout({ children }) {
         .then(({ data, error }) => {
           if (error || !data || data.length === 0) {
             router.push('/onboarding');
-            return;
+          } else {
+            setChecked(true);
           }
-
-          const householdId = data[0].household_id;
-
-          supabase
-            .from('households')
-            .select('invite_code')
-            .eq('id', householdId)
-            .single()
-            .then(({ data: household }) => {
-              if (household) setInviteCode(household.invite_code);
-              setChecked(true);
-            });
         });
     });
   }, [router]);
@@ -62,19 +51,12 @@ export default function DashboardLayout({ children }) {
       {/* 상단: 제목 + 로그아웃 */}
       <nav className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
         <span className="font-bold text-lg">부부 가계부</span>
-        <div className="flex items-center gap-3">
-          {inviteCode && (
-            <span className="text-xs text-gray-400">
-              초대 코드: <span className="font-mono font-semibold text-gray-600">{inviteCode}</span>
-            </span>
-          )}
-          <button
-            onClick={handleSignOut}
-            className="text-sm text-gray-500 hover:text-red-500"
-          >
-            로그아웃
-          </button>
-        </div>
+        <button
+          onClick={handleSignOut}
+          className="text-sm text-gray-500 hover:text-red-500"
+        >
+          로그아웃
+        </button>
       </nav>
 
       {/* 콘텐츠 — 하단 탭바 높이만큼 여백 */}

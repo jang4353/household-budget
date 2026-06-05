@@ -9,6 +9,7 @@ export default function OnboardingPage() {
   const [inviteCode, setInviteCode] = useState('');
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [joinLoading, setJoinLoading] = useState(false);
   const [error, setError] = useState('');
   const [created, setCreated] = useState(null);
 
@@ -48,6 +49,24 @@ export default function OnboardingPage() {
 
     setCreated(data);
     setLoading(false);
+  }
+
+  async function handleJoin() {
+    if (inviteCode.length < 6) return;
+    setError('');
+    setJoinLoading(true);
+
+    const { error } = await supabase.rpc('join_household', {
+      invite_code_input: inviteCode,
+    });
+
+    if (error) {
+      setError(error.message);
+      setJoinLoading(false);
+      return;
+    }
+
+    router.push('/transactions');
   }
 
   if (!ready) return null;
@@ -103,10 +122,11 @@ export default function OnboardingPage() {
             className="w-full border border-gray-300 rounded px-3 py-2 text-sm text-center tracking-widest focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
-            onClick={() => alert('다음 단계에서 구현')}
-            className="w-full border border-blue-600 text-blue-600 py-2 rounded font-medium hover:bg-blue-50"
+            onClick={handleJoin}
+            disabled={joinLoading || inviteCode.length < 6}
+            className="w-full border border-blue-600 text-blue-600 py-2 rounded font-medium hover:bg-blue-50 disabled:opacity-50"
           >
-            참여하기
+            {joinLoading ? '참여 중...' : '참여하기'}
           </button>
         </div>
       </div>
