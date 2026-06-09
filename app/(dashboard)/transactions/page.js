@@ -15,6 +15,7 @@ export default function TransactionsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [filter, setFilter] = useState('all');
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -69,6 +70,18 @@ export default function TransactionsPage() {
 
   const { year, month } = currentDate;
 
+  const filteredTransactions = transactions.filter((t) => {
+    if (filter === 'mine') return t.user_id === currentUserId;
+    if (filter === 'spouse') return t.user_id !== currentUserId;
+    return true;
+  });
+
+  const FILTERS = [
+    { value: 'all', label: '전체' },
+    { value: 'mine', label: '나' },
+    { value: 'spouse', label: '배우자' },
+  ];
+
   return (
     <div className="max-w-md mx-auto mt-6">
       {/* 월 헤더 */}
@@ -78,6 +91,23 @@ export default function TransactionsPage() {
           <p className="text-lg font-bold">{year}년 {month}월</p>
           <button onClick={moveNext} className="text-gray-400 hover:text-gray-700 text-lg px-1">▶</button>
         </div>
+      </div>
+
+      {/* 필터 */}
+      <div className="flex gap-2 mb-4">
+        {FILTERS.map(({ value, label }) => (
+          <button
+            key={value}
+            onClick={() => setFilter(value)}
+            className={`px-3 py-1 rounded-full text-sm border ${
+              filter === value
+                ? 'bg-blue-600 text-white border-blue-600'
+                : 'text-gray-500 border-gray-300 hover:border-gray-400'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
       {/* 거래 내역 섹션 헤더 */}
@@ -95,12 +125,12 @@ export default function TransactionsPage() {
 
       {error && <p className="text-center text-red-500 text-sm">{error}</p>}
 
-      {!loading && !error && transactions.length === 0 && (
+      {!loading && !error && filteredTransactions.length === 0 && (
         <p className="text-center text-gray-400 text-sm mt-8">아직 등록된 거래가 없습니다.</p>
       )}
 
-      {!loading && !error && transactions.length > 0 && (
-        <TransactionList transactions={transactions} onDelete={handleDelete} currentUserId={currentUserId} />
+      {!loading && !error && filteredTransactions.length > 0 && (
+        <TransactionList transactions={filteredTransactions} onDelete={handleDelete} currentUserId={currentUserId} />
       )}
     </div>
   );
