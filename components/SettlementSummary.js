@@ -14,7 +14,7 @@ export default function SettlementSummary({ income, expense, netAmount }) {
         </div>
         <div className="border-t border-gray-100 pt-3 flex justify-between items-center">
           <span className="text-sm font-semibold text-gray-700">순증가액</span>
-          <span className={`text-base font-bold ${netAmount >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+          <span className="text-base font-bold text-green-600">
             {netAmount >= 0 ? '+' : '-'}{fmt(Math.abs(netAmount))}
           </span>
         </div>

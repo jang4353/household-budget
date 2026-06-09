@@ -150,8 +150,8 @@
     },
     {
       "path": "components\\SettlementSummary.js",
-      "accessCount": 5,
-      "lastAccessed": 1780991894690,
+      "accessCount": 6,
+      "lastAccessed": 1780992256474,
       "type": "file"
     },
     {
@@ -185,6 +185,12 @@
       "type": "file"
     },
     {
+      "path": "app\\(dashboard)\\settlement\\page.js",
+      "accessCount": 2,
+      "lastAccessed": 1780992250777,
+      "type": "file"
+    },
+    {
       "path": "components\\TransactionForm.js",
       "accessCount": 1,
       "lastAccessed": 1780985959598,
@@ -200,12 +206,6 @@
       "path": "app\\(dashboard)\\transactions\\[id]\\edit\\page.js",
       "accessCount": 1,
       "lastAccessed": 1780985964079,
-      "type": "file"
-    },
-    {
-      "path": "app\\(dashboard)\\settlement\\page.js",
-      "accessCount": 1,
-      "lastAccessed": 1780991441554,
       "type": "file"
     },
     {
