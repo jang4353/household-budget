@@ -8,6 +8,7 @@ import { supabase } from '@/lib/supabase';
 const TAB_ITEMS = [
   { href: '/transactions', label: '거래' },
   { href: '/statistics', label: '통계' },
+  { href: '/settlement', label: '결산' },
   { href: '/assets', label: '자산' },
 ];
 

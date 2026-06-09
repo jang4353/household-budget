@@ -36,7 +36,7 @@ export default function TransactionItem({ id, userId, currentUserId, category, m
         </div>
 
         {/* 오른쪽: 금액 */}
-        <span className={`text-sm font-medium shrink-0 ${type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
+        <span className={`text-sm font-medium shrink-0 ${type === 'income' ? 'text-red-500' : 'text-blue-600'}`}>
           {type === 'income' ? '+' : '-'}{fmt(amount)}
         </span>
       </div>

@@ -132,8 +132,8 @@
   "hotPaths": [
     {
       "path": "components\\TransactionItem.js",
-      "accessCount": 13,
-      "lastAccessed": 1780989034996,
+      "accessCount": 15,
+      "lastAccessed": 1780991883166,
       "type": "file"
     },
     {
@@ -149,6 +149,12 @@
       "type": "file"
     },
     {
+      "path": "components\\SettlementSummary.js",
+      "accessCount": 5,
+      "lastAccessed": 1780991894690,
+      "type": "file"
+    },
+    {
       "path": "components\\TransactionList.js",
       "accessCount": 3,
       "lastAccessed": 1780986432314,
@@ -158,6 +164,24 @@
       "path": "app\\(dashboard)\\transactions\\new\\page.js",
       "accessCount": 3,
       "lastAccessed": 1780986450975,
+      "type": "file"
+    },
+    {
+      "path": "components\\MonthlySummary.js",
+      "accessCount": 3,
+      "lastAccessed": 1780991894365,
+      "type": "file"
+    },
+    {
+      "path": "app\\(dashboard)\\layout.js",
+      "accessCount": 2,
+      "lastAccessed": 1780991421619,
+      "type": "file"
+    },
+    {
+      "path": "app\\(dashboard)\\assets\\page.js",
+      "accessCount": 2,
+      "lastAccessed": 1780991891361,
       "type": "file"
     },
     {
@@ -176,6 +200,18 @@
       "path": "app\\(dashboard)\\transactions\\[id]\\edit\\page.js",
       "accessCount": 1,
       "lastAccessed": 1780985964079,
+      "type": "file"
+    },
+    {
+      "path": "app\\(dashboard)\\settlement\\page.js",
+      "accessCount": 1,
+      "lastAccessed": 1780991441554,
+      "type": "file"
+    },
+    {
+      "path": "components\\AssetTrendChart.js",
+      "accessCount": 1,
+      "lastAccessed": 1780991782513,
       "type": "file"
     }
   ],

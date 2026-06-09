@@ -66,7 +66,7 @@ export default function AssetsPage() {
           {/* 누적 현금흐름 요약 카드 */}
           <div className="bg-white rounded-lg shadow p-4 mb-4 text-center">
             <p className="text-xs text-gray-500 mb-1">누적 현금흐름</p>
-            <p className={`text-2xl font-bold ${totalAsset >= 0 ? 'text-blue-600' : 'text-red-500'}`}>
+            <p className={`text-2xl font-bold ${totalAsset >= 0 ? 'text-gray-900' : 'text-red-500'}`}>
               {fmt(totalAsset)}
             </p>
             {dateRange && (
