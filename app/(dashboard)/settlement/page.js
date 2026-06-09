@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import SettlementSummary from '@/components/SettlementSummary';
+import CoupleContribution from '@/components/CoupleContribution';
 
 const PERIOD_TYPES = [
   { value: 'month', label: '월' },
@@ -57,6 +58,38 @@ export default function SettlementPage() {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [hasSpouse, setHasSpouse] = useState(false);
+  const [userLoading, setUserLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadUser() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) { setUserLoading(false); return; }
+
+      const uid = session.user.id;
+      setCurrentUserId(uid);
+
+      const { data: memberData } = await supabase
+        .from('household_members')
+        .select('household_id')
+        .eq('user_id', uid)
+        .single();
+
+      if (memberData) {
+        const { data: allMembers } = await supabase
+          .from('household_members')
+          .select('user_id')
+          .eq('household_id', memberData.household_id);
+
+        setHasSpouse(allMembers && allMembers.length >= 2);
+      }
+
+      setUserLoading(false);
+    }
+
+    loadUser();
+  }, []);
 
   useEffect(() => {
     const { start, end } = getDateRange(periodType, year, month, quarter);
@@ -66,7 +99,7 @@ export default function SettlementPage() {
 
     supabase
       .from('transactions')
-      .select('type, amount')
+      .select('type, amount, user_id')
       .gte('date', start)
       .lte('date', end)
       .then(({ data, error }) => {
@@ -111,6 +144,23 @@ export default function SettlementPage() {
     .filter((t) => t.type === 'expense')
     .reduce((sum, t) => sum + Number(t.amount), 0);
 
+  const myTx = currentUserId
+    ? transactions.filter((t) => t.user_id === currentUserId)
+    : [];
+  const spouseTx = currentUserId
+    ? transactions.filter((t) => t.user_id !== currentUserId)
+    : [];
+
+  const mine = {
+    income: myTx.filter((t) => t.type === 'income').reduce((s, t) => s + Number(t.amount), 0),
+    expense: myTx.filter((t) => t.type === 'expense').reduce((s, t) => s + Number(t.amount), 0),
+  };
+
+  const spouse = hasSpouse ? {
+    income: spouseTx.filter((t) => t.type === 'income').reduce((s, t) => s + Number(t.amount), 0),
+    expense: spouseTx.filter((t) => t.type === 'expense').reduce((s, t) => s + Number(t.amount), 0),
+  } : null;
+
   return (
     <div className="max-w-md mx-auto mt-6">
       {/* 기간 타입 선택 */}
@@ -145,7 +195,12 @@ export default function SettlementPage() {
       {error && <p className="text-center text-red-500 text-sm">{error}</p>}
 
       {!loading && !error && (
-        <SettlementSummary income={income} expense={expense} netAmount={income - expense} />
+        <>
+          <SettlementSummary income={income} expense={expense} netAmount={income - expense} />
+          {!userLoading && currentUserId && (
+            <CoupleContribution mine={mine} spouse={spouse} />
+          )}
+        </>
       )}
     </div>
   );
