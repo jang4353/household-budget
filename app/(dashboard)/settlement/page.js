@@ -76,14 +76,13 @@ export default function SettlementPage() {
         .eq('user_id', uid)
         .single();
 
-      if (memberData) {
-        const { data: allMembers } = await supabase
-          .from('household_members')
-          .select('user_id')
-          .eq('household_id', memberData.household_id);
+      const { data: spouseCheck } = await supabase
+        .from('transactions')
+        .select('user_id')
+        .neq('user_id', uid)
+        .limit(1);
 
-        setHasSpouse(allMembers && allMembers.length >= 2);
-      }
+      setHasSpouse(spouseCheck && spouseCheck.length > 0);
 
       setUserLoading(false);
     }
