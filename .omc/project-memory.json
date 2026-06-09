@@ -143,6 +143,12 @@
       "type": "file"
     },
     {
+      "path": "app\\(dashboard)\\statistics\\page.js",
+      "accessCount": 6,
+      "lastAccessed": 1780989987891,
+      "type": "file"
+    },
+    {
       "path": "components\\TransactionList.js",
       "accessCount": 3,
       "lastAccessed": 1780986432314,
