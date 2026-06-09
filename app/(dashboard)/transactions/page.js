@@ -14,6 +14,13 @@ export default function TransactionsPage() {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [currentUserId, setCurrentUserId] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) setCurrentUserId(session.user.id);
+    });
+  }, []);
 
   useEffect(() => {
     const { year, month } = currentDate;
@@ -93,7 +100,7 @@ export default function TransactionsPage() {
       )}
 
       {!loading && !error && transactions.length > 0 && (
-        <TransactionList transactions={transactions} onDelete={handleDelete} />
+        <TransactionList transactions={transactions} onDelete={handleDelete} currentUserId={currentUserId} />
       )}
     </div>
   );

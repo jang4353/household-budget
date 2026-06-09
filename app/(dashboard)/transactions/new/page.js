@@ -19,8 +19,21 @@ export default function NewTransactionPage() {
   async function handleSubmit({ type, amount, category, date, memo }) {
     const { data: { session } } = await supabase.auth.getSession();
 
+    const { data: memberData } = await supabase
+      .from('household_members')
+      .select('household_id')
+      .eq('user_id', session.user.id)
+      .limit(1)
+      .single();
+
+    if (!memberData) {
+      router.push('/onboarding');
+      return;
+    }
+
     const { error } = await supabase.from('transactions').insert({
       user_id: session.user.id,
+      household_id: memberData.household_id,
       type,
       amount: Number(amount),
       category,

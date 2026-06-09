@@ -1,0 +1,177 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1780908120714,
+  "projectRoot": "C:\\git_project\\household-budget",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "JavaScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "jsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "next",
+        "version": "16.2.7",
+        "category": "fullstack"
+      },
+      {
+        "name": "react",
+        "version": "19.2.4",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.4",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": "npm run lint",
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "eslint"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": "ES modules",
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "app",
+      "components",
+      "lib",
+      "public"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "app": {
+      "path": "app",
+      "purpose": "Application code",
+      "fileCount": 4,
+      "lastAccessed": 1780908120659,
+      "keyFiles": [
+        "favicon.ico",
+        "globals.css",
+        "layout.js",
+        "page.js"
+      ]
+    },
+    "components": {
+      "path": "components",
+      "purpose": "UI components",
+      "fileCount": 7,
+      "lastAccessed": 1780908120660,
+      "keyFiles": [
+        "AssetTrendChart.js",
+        "CategoryExpenseChart.js",
+        "MonthlySummary.js",
+        "TransactionForm.js",
+        "TransactionForm.js.tmp.15536.fa3083537974"
+      ]
+    },
+    "constants": {
+      "path": "constants",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1780908120673,
+      "keyFiles": [
+        "categories.js"
+      ]
+    },
+    "lib": {
+      "path": "lib",
+      "purpose": "Library code",
+      "fileCount": 1,
+      "lastAccessed": 1780908120674,
+      "keyFiles": [
+        "supabase.js"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 5,
+      "lastAccessed": 1780908120675,
+      "keyFiles": [
+        "file.svg",
+        "globe.svg",
+        "next.svg",
+        "vercel.svg",
+        "window.svg"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "components\\TransactionItem.js",
+      "accessCount": 8,
+      "lastAccessed": 1780987501378,
+      "type": "file"
+    },
+    {
+      "path": "app\\(dashboard)\\transactions\\page.js",
+      "accessCount": 3,
+      "lastAccessed": 1780986424513,
+      "type": "file"
+    },
+    {
+      "path": "components\\TransactionList.js",
+      "accessCount": 3,
+      "lastAccessed": 1780986432314,
+      "type": "file"
+    },
+    {
+      "path": "app\\(dashboard)\\transactions\\new\\page.js",
+      "accessCount": 3,
+      "lastAccessed": 1780986450975,
+      "type": "file"
+    },
+    {
+      "path": "components\\TransactionForm.js",
+      "accessCount": 1,
+      "lastAccessed": 1780985959598,
+      "type": "file"
+    },
+    {
+      "path": "app\\onboarding\\page.js",
+      "accessCount": 1,
+      "lastAccessed": 1780985963674,
+      "type": "file"
+    },
+    {
+      "path": "app\\(dashboard)\\transactions\\[id]\\edit\\page.js",
+      "accessCount": 1,
+      "lastAccessed": 1780985964079,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
